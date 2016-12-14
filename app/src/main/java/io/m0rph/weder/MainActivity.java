@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //Test list of locations
-
+        //if else Add a location
         String[] locations = {"Home", "Cottage"};
         ListAdapter locationListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, locations);
         ListView locationListView = (ListView) findViewById(R.id.locationList);
@@ -49,10 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //String location = String.valueOf(parent.getItemAtPosition(position));
-                        //Toast.makeText(MainActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-                        //String message = "asdasdasd";
                         //intent.putExtra("com.example.myfirstapp.MESSAGE", message);
                         startActivity(intent);
                     }
@@ -63,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                
+
             }
         });
         // ATTENTION: This was auto-generated to implement the App Indexing API.
