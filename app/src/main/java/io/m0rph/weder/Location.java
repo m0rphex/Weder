@@ -1,16 +1,35 @@
 package io.m0rph.weder;
 
+import org.json.JSONObject;
+
 /**
  * Created by Sandro on 13.12.2016.
  */
 
 public class Location {
+    int id;
     String name;
     int thingspeak_id;
+    JSONObject sensor_data;
 
-    public Location(String name, int thingspeak_id) {
+    public Location(int id, String name, int thingspeak_id, JSONObject sensor_data) {
+        this.id = id;
         this.name = name;
         this.thingspeak_id = thingspeak_id;
+        this.sensor_data = sensor_data;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -29,9 +48,11 @@ public class Location {
         this.thingspeak_id = thingspeak_id;
     }
 
-    //HTTP GET to https://api.thingspeak.com/channels/CHANNEL_ID/fields/FIELD_ID.json, replacing CHANNEL_ID with the ID of your channel and FIELD_ID with the ID of your field.
-    //https://api.thingspeak.com/channels/156985/fields/1&2&3.json?results=2
+    public JSONObject getSensor_data() {
+        return sensor_data;
+    }
 
-
-
+    public void setSensor_data(JSONObject sensor_data) {
+        this.sensor_data = sensor_data;
+    }
 }
