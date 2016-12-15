@@ -7,29 +7,14 @@ import org.json.JSONObject;
  */
 
 public class Location {
-    int id;
     String name;
     int thingspeak_id;
     JSONObject sensor_data;
 
-    public Location(int id, String name, int thingspeak_id, JSONObject sensor_data) {
-        this.id = id;
+    public Location(String name, int thingspeak_id, JSONObject sensor_data) {
         this.name = name;
         this.thingspeak_id = thingspeak_id;
         this.sensor_data = sensor_data;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -55,4 +40,10 @@ public class Location {
     public void setSensor_data(JSONObject sensor_data) {
         this.sensor_data = sensor_data;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
+
