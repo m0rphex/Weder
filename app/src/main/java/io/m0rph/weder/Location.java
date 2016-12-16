@@ -2,11 +2,13 @@ package io.m0rph.weder;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by Sandro on 13.12.2016.
  */
 
-public class Location {
+public class Location implements Serializable {
     String name;
     int thingspeak_id;
     JSONObject sensor_data;

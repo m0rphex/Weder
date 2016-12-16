@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +28,12 @@ public class MainActivity extends AppCompatActivity {
     List<Location> locationList;
     ListAdapter locationListAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         if (readData().equals("")){
             locationList = new ArrayList<Location>();
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         locationListAdapter = new ArrayAdapter<Location>(this, android.R.layout.simple_expandable_list_item_1, locationList);
-        ListView locationListView = (ListView) findViewById(R.id.locationList);
+        final ListView locationListView = (ListView) findViewById(R.id.locationList);
         locationListView.setAdapter(locationListAdapter);
 
         locationListView.setOnItemClickListener(
@@ -56,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-                        //intent.putExtra("com.example.myfirstapp.MESSAGE", message);
+                        intent.putExtra("location_list", (Location)locationList);
+                        intent.putExtra("location_object", (Location)locationListView.getItemAtPosition(position));
                         startActivity(intent);
                     }
                 }
@@ -67,20 +66,23 @@ public class MainActivity extends AppCompatActivity {
     public void addLocation(View view) throws IOException {
         EditText editText = (EditText) findViewById(R.id.txt_addLocation);
         String name = editText.getText().toString();
-        locationList.add(new Location(name,1,null));
+        if (name.length() > 0) {
+            locationList.add(new Location(name, 1, null));
 
-        String json = new Gson().toJson(locationList);
-        FileOutputStream outputStream;
-        String filename = "location_data.json";
-        outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-        outputStream.write(json.getBytes());
-        outputStream.close();
+            String json = new Gson().toJson(locationList);
+            FileOutputStream outputStream;
+            String filename = "location_data.json";
+            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream.write(json.getBytes());
+            outputStream.close();
+        }
 
         view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+
     }
 
     public String readData(){
