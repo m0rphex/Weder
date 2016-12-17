@@ -19,7 +19,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-                        intent.putExtra("location_list", (Location)locationList);
+                        //intent.putExtra("location_list", (Location)locationList);
                         intent.putExtra("location_object", (Location)locationListView.getItemAtPosition(position));
                         startActivity(intent);
                     }

@@ -3,27 +3,26 @@ package io.m0rph.weder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
-
-import java.io.FileNotFoundException;
+import org.json.JSONException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.widget.Toast.LENGTH_SHORT;
+public class LocationActivity extends AppCompatActivity  {
 
-public class LocationActivity extends AppCompatActivity {
+
     List<Location> locationList = new ArrayList<Location>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -31,11 +30,18 @@ public class LocationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
 
-        locationList = (List<Location>) intent.getSerializableExtra("location_list");
+        //locationList = (List<Location>) intent.getSerializableExtra("location_list");
         Location location = (Location)intent.getSerializableExtra("location_object");
 
-        Toast.makeText(getApplicationContext(), location.getName(), Toast.LENGTH_SHORT).show();
+        location.setThingspeak_id(156985);
 
+        try {
+            Toast.makeText(getApplicationContext(), location.getChannel().getString("name"), Toast.LENGTH_SHORT).show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
 
         //Thingspeak id request if not set
